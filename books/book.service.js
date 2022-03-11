@@ -12,8 +12,16 @@ module.exports = {
 };
 
 
-async function getAll() {
-    return await Book.find();
+async function getAll(data) {
+    var cnd = {};
+    var keyword = data.keyword;
+    if (keyword != "" && keyword != "undefined" && keyword != undefined) {
+
+        cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }]
+    }
+   
+    return await Book.find(cnd).populate("author createdBy ");
+
 }
 
 async function getById(id) {

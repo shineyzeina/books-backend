@@ -10,6 +10,11 @@ const schema = new Schema({
         ref: 'Author',
         required: true
     },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     createdDate: { type: Date, default: Date.now }
 });
 

@@ -21,7 +21,9 @@ async function isRevoked(req, payload, done) {
     // if the user is not admin, he is not allowed to add/edit/delete books/authors
     // if the user is not an admin, he is not allowed to list/edit/delete users.
     // revoke token if user no longer exist
-    if (!user || (req.method != "GET" && req.path.indexOf("/book/") > -1 && req.path.indexOf("/author/") > -1 && user.type != "admin") || (req.path.indexOf("/user") > -1 && user.type != "admin")) {
+    if (!user || (req.method != "GET" && req.path.indexOf("/book/") > -1 && req.path.indexOf("/author/") > -1 && user.type != "admin") || (req.path.indexOf("/users") > -1 && user.type != "admin")) {
+        console.log("Request is not allowed!!!");
+        console.log(user)
         return done(null, true);
     }
 

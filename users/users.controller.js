@@ -8,6 +8,7 @@ router.post('/register', register);
 router.get('/', getAll);
 router.get('/current', getCurrent);
 router.get('/:id', getById);
+router.put('/current', updateCurrent);
 router.put('/:id', update);
 router.delete('/:id', _delete);
 
@@ -42,7 +43,11 @@ function getById(req, res, next) {
         .then(user => user ? res.json(user) : res.sendStatus(404))
         .catch(err => next(err));
 }
-
+function updateCurrent(req, res, next) {
+    userService.update(req.user.sub, req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
 function update(req, res, next) {
     userService.update(req.params.id, req.body)
         .then(() => res.json({}))

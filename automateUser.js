@@ -10,14 +10,14 @@ const userService = require('./users/user.service');
 
 userService.create(
 	{
-		"firstName": "Zeina",
-		"lastName": "Zada",
-		"username": "zeinazada",
+		"firstName": "Sam",
+		"lastName": "ABCD",
+		"username": "sam",
 		"password": "Test1234!",
-		"email": "zeinazada@yahoo.com",
+		"email": "shineyzeina@gmail.com",
 		"dob": "1984-10-11",
 		"phone": "78906469",
-		"type": "admin"
+		"type": "reader"
 		
 	}
 ).

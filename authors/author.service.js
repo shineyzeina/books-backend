@@ -29,7 +29,7 @@ async function getById(id) {
 
 async function create(param) {
 
-    const author = new Author(author);
+    const author = new Author(param);
    // save author
     await author.save();
 }

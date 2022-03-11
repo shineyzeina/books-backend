@@ -12,13 +12,14 @@ router.delete('/:id', _delete);
 module.exports = router;
 
 function saveNew(req, res, next) {
+    req.body.createdBy = req.user.sub;
     bookService.create(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
 }
 
 function getAll(req, res, next) {
-    bookService.getAll()
+    bookService.getAll(req.query)
         .then(books => res.json(books))
         .catch(err => next(err));
 }

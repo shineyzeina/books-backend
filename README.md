@@ -46,9 +46,9 @@ Body:
 
 
 ### Delete user:
-http://localhost:4000/users/[id]
+http://localhost:4000/user/[id]
 
-example: http://localhost:4000/users/613d10d170c0e213d0da68de
+example: http://localhost:4000/user/613d10d170c0e213d0da68de
 
 Method: Delete
 
@@ -56,9 +56,9 @@ Token Required
 
 
 ### Update user
-http://localhost:4000/users/[id]
+http://localhost:4000/user/[id]
 
-http://localhost:4000/users/613d1e89b2107e172ccfc498
+http://localhost:4000/user/613d1e89b2107e172ccfc498
 
 Method: Put
 
@@ -82,7 +82,7 @@ Method: Get
 Token Required
 
 ### Create author
-http://localhost:4000/authors
+http://localhost:4000/author
 
 Method: Post
 
@@ -105,7 +105,7 @@ Token Required
 
 ### Edit author:
 
-http://localhost:4000/authors/[Id]
+http://localhost:4000/author/[Id]
 
 Method: Put
 
@@ -121,7 +121,7 @@ Body
 
 
 ### Create book
-http://localhost:4000/authors
+http://localhost:4000/book
 
 Method: Post
 
@@ -145,7 +145,7 @@ Token Required
 
 ### Edit book:
 
-http://localhost:4000/books/[Id]
+http://localhost:4000/book/[Id]
 
 Method: Put
 
@@ -159,6 +159,4 @@ Body
 
 }
 ```
-"# books" 
-"# books" 
-"# books-front" 
+ 

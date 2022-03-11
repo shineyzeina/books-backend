@@ -32,6 +32,7 @@ function getById(req, res, next) {
 }
 
 function update(req, res, next) {
+    
     authorService.update(req.params.id, req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
