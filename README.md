@@ -14,7 +14,7 @@
 ### Register:
 Note: A new user is by default of type "reader". Only those that will manage users will be admin, and this should be done from the backend directly.
 
-http://localhost:4000/users/register
+http://localhost:4000/user/register
 
 Method: Post
 
