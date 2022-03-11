@@ -15,7 +15,10 @@ const schema = new Schema({
         ref: 'User',
         required: true
     },
-    createdDate: { type: Date, default: Date.now }
+    createdDate: { type: Date, default: Date.now },
+    favorites: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    ]
 });
 
 schema.set('toJSON', {

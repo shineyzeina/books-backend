@@ -10,10 +10,8 @@ const schema = new Schema({
     phone: { type: String, required: true },
     dob: { type: Date, required: true },
     type: { type: String, default: "reader" },
-    createdDate: { type: Date, default: Date.now },
-    favorites: [
-        { type: mongoose.Schema.Types.ObjectId, ref: 'Book' }
-    ]
+    createdDate: { type: Date, default: Date.now }
+  
 });
 
 schema.set('toJSON', {

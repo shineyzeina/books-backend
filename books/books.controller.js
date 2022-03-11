@@ -7,6 +7,7 @@ router.post('/', saveNew);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.put('/:id', update);
+router.put('/favorite/:id', favorite);
 router.delete('/:id', _delete);
 
 module.exports = router;
@@ -35,6 +36,24 @@ function update(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+async function  favorite(req, res, next) {
+    var action = req.body.action;
+    let book = await bookService.getById(req.params.id);
+    let fav = book.favorites;
+    if (!fav){ fav = []}
+    if (action == "add"){
+        fav.push(req.user.sub);
+    }
+    else{
+        var index = fav.indexOf(req.user.sub);
+        fav.splice(index, 1);
+       
+    }
+    book.favorites = fav; 
+    book.save().then(() => res.json({}))
+    .catch(err => next(err));
+}
+
 
 function _delete(req, res, next) {
     bookService.delete(req.params.id)
