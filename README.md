@@ -33,7 +33,7 @@ Body:
 ```
 ### Authenticate/login
 
-http://localhost:4000/users/authenticate
+http://localhost:4000/user/authenticate
 
 Method: Post
 ```
