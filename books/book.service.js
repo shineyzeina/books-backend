@@ -1,0 +1,53 @@
+﻿const config = require('config.json');
+const jwt = require('jsonwebtoken');
+const db = require('_helpers/db');
+const Book = db.Book;
+
+module.exports = {
+    getAll,
+    getById,
+    create,
+    update,
+    delete: _delete
+};
+
+
+async function getAll() {
+    return await Book.find();
+}
+
+async function getById(id) {
+    return await Book.findById(id);
+}
+
+async function create(bookParam) {
+    // validate
+    if (await Book.findOne({ ISBN: bookParam.ISBN })) {
+        throw 'ISBN "' + bookParam.ISBN + '" is already taken';
+    }
+
+    const book = new Book(bookParam);
+
+    // save book
+    await book.save();
+}
+
+async function update(id, bookParam) {
+    const book = await Book.findById(id);
+
+    // validate
+    if (!book) throw 'Book not found';
+    if (book.ISBN !== bookParam.ISBN && await Book.findOne({ ISBN: bookParam.ISBN })) {
+        throw 'ISBN "' + bookParam.ISBN + '" is already taken';
+    }
+
+
+    // copy bookParam properties to book
+    Object.assign(book, bookParam);
+
+    await book.save();
+}
+
+async function _delete(id) {
+    await Book.findByIdAndRemove(id);
+}
