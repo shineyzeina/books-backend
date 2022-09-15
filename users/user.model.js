@@ -8,7 +8,7 @@ const schema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     phone: { type: String, required: true },
-    dob: { type: Date, required: true },
+    dob: { type: Date, required: false },
     type: { type: String, default: "reader" },
     createdDate: { type: Date, default: Date.now }
   
