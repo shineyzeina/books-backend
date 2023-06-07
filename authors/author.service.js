@@ -17,7 +17,8 @@ async function getAll(data) {
     var keyword = data.keyword;
     if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
-        cnd.$or = [{ "first_name": new RegExp(keyword, 'i') }, { "last_name": new RegExp(keyword, 'i') }]
+        cnd.$or = [{ "first_name": new RegExp(keyword, 'i') }, { "last_name": new RegExp(keyword, 'i') },
+         {"age": new RegEx(keyword, 'i')}, {"nationality": new RegEx(keyword, 'i')} , {"address": new RegEx(keyword, 'i')}]
     }
    
     return await Author.find(cnd).populate("createdBy");
