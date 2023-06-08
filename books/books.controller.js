@@ -19,11 +19,55 @@ function saveNew(req, res, next) {
         .catch(err => next(err));
 }
 
-function getAll(req, res, next) {
-    bookService.getAll(req.query)
-        .then(books => res.json(books))
-        .catch(err => next(err));
-}
+// function getAll(req, res, next) {
+//     bookService.getAll(req.query)
+//         .then(books => res.json(books))
+//         .catch(err => next(err));
+// }
+
+// function getAll(req, res, next) {
+//     const { keyword, authorId } = req.query;
+  
+//     const data = {
+//       keyword: keyword || "",
+//       authorId: authorId || null
+//     };
+  
+//     bookService.getAll(data)
+//       .then(books => res.json(books))
+//       .catch(err => next(err));
+//   }
+
+  async function getAll(data, booksPerPage) {
+    const keyword = data.keyword;
+    const authorId = data.authorId;
+  
+    let condition = {};
+  
+    if (keyword) {
+      condition.$or = [
+        { "ISBN": new RegExp(keyword, 'i') },
+        { "name": new RegExp(keyword, 'i') },
+        { "category": new RegExp(keyword, 'i') }
+      ];
+    }
+  
+    if (authorId) {
+      condition.author = authorId;
+    }
+  
+    let query = Book.find(condition).populate("author createdBy");
+  
+    if (booksPerPage) {
+      query = query.limit(booksPerPage);
+    }
+  
+    const books = await query;
+  
+    return books;
+  }
+  
+  
 
 function getById(req, res, next) {
     bookService.getById(req.params.id)
