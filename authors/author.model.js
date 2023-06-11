@@ -14,6 +14,7 @@ const Author = new Schema({
     age : {type: String, unique: false, required: true},
     nationality : {type: String, unique: false, required: true},
     address: AddressSchema,
+    pictureUrl: { type: String , unique: false},
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
