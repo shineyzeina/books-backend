@@ -10,10 +10,8 @@ const storage = multer.diskStorage({
       cb(null, 'authors/pictures'); // Specify the destination folder where the images will be saved
     },
     filename: (req, file, cb) => {
-    //   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    //   const extension = path.extname(file.originalname);
-    //   cb(null, uniqueSuffix + extension); // Set the file name to a unique value
     const filename = `${file.originalname}`;
+    console.log(filename);
     cb(null, filename)
     }
   });
@@ -33,29 +31,30 @@ router.delete('/:id', _delete);
 module.exports = router;
 
 function uploadPicture(req, res) {
-    try {
+  try {
       if (!req.file) {
-        res.status(400).json({ message: 'No profile picture provided' });
-        return;
+          res.status(400).json({ message: 'No profile picture provided' });
+          return;
       }
-  
-      const profilePicturePath = path.join(__dirname, '../authors/pictures/');
-      console.log("PP path: ", profilePicturePath)
+
+      const profilePicturePath = path.join(__dirname, 'pictures');
+      console.log("PP path: ", profilePicturePath);
       const profilePictureUrl = `${req.file.filename}`;
       const abs_path = profilePicturePath + profilePictureUrl;
-      console.log("abs path ", abs_path)
-  
-      // Move the uploaded file to the author-profile-pictures folder
-      fs.renameSync(req.file.path, `${profilePicturePath}/${req.file.filename}`);
-      
-      const needed_path = 'authors/pictures/' + `${req.file.filename}`;
+      console.log("abs path ", abs_path);
 
-      res.status(200).json({ url: abs_path });
-    } catch (error) {
+      // Move the uploaded file to the pictures directory
+      fs.renameSync(req.file.path, `${profilePicturePath}/${req.file.filename}`);
+
+      const needed_path = '/pictures/' + `${req.file.filename}`;
+
+      res.status(200).json({ url: needed_path });
+  } catch (error) {
       console.error('Error uploading profile picture:', error);
       res.status(500).json({ message: 'Error uploading profile picture' });
-    }
-  };
+  }
+}
+
 
 function saveNew(req, res, next) {
     req.body.createdBy = req.user.sub;

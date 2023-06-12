@@ -32,28 +32,29 @@ async function create(param) {
 
     const author = new Author(param);
     author.pictureUrl = param.pictureUrl;
+    if (param.image) {
+        const image = param.image;
+    
+        // Create a unique filename for the image
+        const filename = `${author.first_name}-${image.name}`;
+    
+        // Define the path where the image will be saved
+        const imagePath = path.join(__dirname,'../authors/author-picture', filename);
+        console.log("Image path", imagePath);
+    
+        // Read the image file
+        const fileData = fs.readFileSync(image.path);
+    
+        // Save the image file
+        fs.writeFileSync(imagePath, fileData);
+    
+        // Update the author's image field with the image URL
+        author.image = `/images/${filename}`;
+    }
    // save author
     await author.save();
 
-    // if (param.image) {
-    //     const image = param.image;
-    
-    //     // Create a unique filename for the image
-    //     const filename = `${author.first_name}-${image.name}`;
-    
-    //     // Define the path where the image will be saved
-    //     const imagePath = path.join(__dirname,'../authors/author-picture', filename);
-    //     console.log("Image path", imagePath);
-    
-    //     // Read the image file
-    //     const fileData = fs.readFileSync(image.path);
-    
-    //     // Save the image file
-    //     fs.writeFileSync(imagePath, fileData);
-    
-    //     // Update the author's image field with the image URL
-    //     author.image = `/images/${filename}`;
-    // }
+   
 }
 
 async function update(id, authorParam) {
