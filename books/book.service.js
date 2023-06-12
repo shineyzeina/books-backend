@@ -12,52 +12,17 @@ module.exports = {
 };
 
 
-// async function getAll(data) {
-//     const keyword = data.keyword;
-//     let condition = {};
-  
-//     if (keyword) {
-//       condition.$or = [
-//         { "ISBN": new RegExp(keyword, 'i') },
-//         { "name": new RegExp(keyword, 'i') },
-//         { "category": new RegExp(keyword, 'i') }
-//       ];
-//     }
-  
-//     if (data.authorId) {
-//       condition.author = data.authorId;
-//     }
-  
-//     return await Book.find(condition).populate("author createdBy");
-//   }
+async function getAll(data) {
+    var cnd = {};
+    var keyword = data.keyword;
+    if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
-  async function getAll(data, booksPerPage) {
-    const keyword = data.keyword;
-    const authorId = data.authorId;
-  
-    let condition = {};
-  
-    if (keyword) {
-      condition.$or = [
-        { "ISBN": new RegExp(keyword, 'i') },
-        { "name": new RegExp(keyword, 'i') },
-        { "category": new RegExp(keyword, 'i') }
-      ];
+        cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i')}, { "category": new RegExp(keyword, 'i') }]
     }
-  
-    if (authorId) {
-      condition.author = authorId;
-    }
-  
-    const books = await Book.find(condition)
-      .populate("author createdBy")
-      .limit(booksPerPage);
-  
-    return books;
-  }
-  
-  
+   
+    return await Book.find(cnd).populate("author createdBy ");
 
+}
 
 async function getById(id) {
     return await Book.findById(id);

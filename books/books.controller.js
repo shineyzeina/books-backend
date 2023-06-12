@@ -71,6 +71,12 @@ function getAll(req, res, next) {
   
   
 
+function getAll(req, res, next) {
+    bookService.getAll(req.query)
+        .then(books => res.json(books))
+        .catch(err => next(err));
+}
+
 function getById(req, res, next) {
     bookService.getById(req.params.id)
         .then(book => book ? res.json(book) : res.sendStatus(404))
