@@ -5,55 +5,29 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'authors/pictures'); // Specify the destination folder where the images will be saved
-    },
-    filename: (req, file, cb) => {
-    const filename = `${file.originalname}`;
-    console.log(filename);
-    cb(null, filename)
-    }
-  });
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//       cb(null, 'authors/pictures'); // Specify the destination folder where the images will be saved
+//     },
+//     filename: (req, file, cb) => {
+//     const filename = `${file.originalname}`;
+//     console.log(filename);
+//     cb(null, filename)
+//     }
+//   });
   
-  // Multer upload instance
-const upload = multer({ storage: storage });
+//   // Multer upload instance
+// const upload = multer({ storage: storage });
 
-module.exports = upload;
+// module.exports = upload;
 // routes
 router.post('/', saveNew);
-router.post('/upload-picture', upload.single('picture'), uploadPicture);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.put('/:id', update);
 router.delete('/:id', _delete);
 
 module.exports = router;
-
-function uploadPicture(req, res) {
-  try {
-      if (!req.file) {
-          res.status(400).json({ message: 'No profile picture provided' });
-          return;
-      }
-
-      const profilePicturePath = path.join(__dirname, 'pictures');
-      console.log("PP path: ", profilePicturePath);
-      const profilePictureUrl = `${req.file.filename}`;
-      const abs_path = profilePicturePath + profilePictureUrl;
-      console.log("abs path ", abs_path);
-
-      // Move the uploaded file to the pictures directory
-      fs.renameSync(req.file.path, `${profilePicturePath}/${req.file.filename}`);
-
-      const needed_path = '/pictures/' + `${req.file.filename}`;
-
-      res.status(200).json({ url: needed_path });
-  } catch (error) {
-      console.error('Error uploading profile picture:', error);
-      res.status(500).json({ message: 'Error uploading profile picture' });
-  }
-}
 
 
 function saveNew(req, res, next) {

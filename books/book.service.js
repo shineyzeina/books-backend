@@ -15,10 +15,15 @@ module.exports = {
 async function getAll(data) {
     var cnd = {};
     var keyword = data.keyword;
+    var authId = data.author;
     if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
         cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i')}, { "category": new RegExp(keyword, 'i') }]
     }
+    if (authId != "" && authId != "undefined" && authId != undefined) {
+        cnd.author = authId
+    }
+
    
     return await Book.find(cnd).populate("author createdBy ");
 
