@@ -40,12 +40,13 @@ async function create(param) {
         console.log(file_name);
         param.picture = file_name;
 		
-    const author = new Author(param);
-
-
-    await author.save();
+    
 
     }
+    const author = new Author(param);
+    await author.save();
+
+    
 }
 
 async function update(id, authorParam) {
