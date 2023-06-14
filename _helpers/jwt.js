@@ -12,7 +12,8 @@ function jwt() {
             '/users/authenticate',
             '/users/register',
             '/user/authenticate',
-            '/user/register'
+            '/user/register',
+            '/upload/authors/*'
         ]
     });
 }

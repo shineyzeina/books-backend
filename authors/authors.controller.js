@@ -34,7 +34,7 @@ function saveNew(req, res, next) {
     req.body.createdBy = req.user.sub;
     authorService.create(req.body)
         .then(() => res.json({}))
-        .catch(err => next("Error: " +err));
+        .catch(err => next("Error honnn: " +err));
 }
 
 function getAll(req, res, next) {

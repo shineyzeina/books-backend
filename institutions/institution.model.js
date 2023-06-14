@@ -8,13 +8,19 @@ const AddressSchema = new Schema({
     building: { type: String, required: true }
   });
 
-const Author = new Schema({
-    first_name: { type: String, unique: true, required: true },
-    last_name: { type: String, unique: false, required: true },
-    age : {type: String, unique: false, required: true},
-    nationality : {type: String, unique: false, required: true},
+
+const ContactSchema = new Schema ({
+    email: {type: String, unique:true, required: true},
+    phoneNumber: {type: String, unique:true, required: true},
+    website: {type: String, unique:true, required: true, sparse:true}
+})
+
+const Institution = new Schema({
+
+    name: { type: String, unique: true, required: true },
+    dateOfCreation: {type: String, unique: false, required: true},
+    contactInfo: ContactSchema,
     address: AddressSchema,
-    picture: {type: String, unique: true, required:true},
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -23,7 +29,7 @@ const Author = new Schema({
     createdDate: { type: Date, default: Date.now }
 });
 
-Author.set('toJSON', {
+Institution.set('toJSON', {
     virtuals: true,
     versionKey: false,
     transform: function (doc, ret) {
@@ -32,4 +38,4 @@ Author.set('toJSON', {
     }
 });
 
-module.exports = mongoose.model('Author', Author);
+module.exports = mongoose.model('Institution', Institution);

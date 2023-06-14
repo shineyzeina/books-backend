@@ -13,6 +13,8 @@ module.exports = {
 
 
 async function getAll(data) {
+
+    
     var cnd = {};
     var keyword = data.keyword;
     var authId = data.author;
