@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const db = require('_helpers/db');
 const Author = db.Author;
 
+
 module.exports = {
     getAll,
     getById,
@@ -28,9 +29,7 @@ async function getById(id) {
 }
 
 async function create(param) {
-
     const author = new Author(param);
-   // save author
     await author.save();
 }
 

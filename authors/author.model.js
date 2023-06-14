@@ -4,12 +4,16 @@ const Schema = mongoose.Schema;
 const Author = new Schema({
     first_name: { type: String, unique: true, required: true },
     last_name: { type: String, unique: false, required: true },
+    authorImage: { type: String, required: true },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    createdDate: { type: Date, default: Date.now }
+    createdDate: { type: Date, default: Date.now },
+    biography: { type: String },
+    date_of_birth: { type: Date },
+    nationality: { type: String }
 });
 
 Author.set('toJSON', {
