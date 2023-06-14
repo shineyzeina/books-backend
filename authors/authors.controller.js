@@ -1,26 +1,9 @@
 ﻿const express = require('express');
 const router = express.Router();
 const authorService = require('./author.service');
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//       cb(null, 'authors/pictures'); // Specify the destination folder where the images will be saved
-//     },
-//     filename: (req, file, cb) => {
-//     const filename = `${file.originalname}`;
-//     console.log(filename);
-//     cb(null, filename)
-//     }
-//   });
-  
-//   // Multer upload instance
-// const upload = multer({ storage: storage });
-
-// module.exports = upload;
-// routes
 router.post('/', saveNew);
 router.get('/', getAll);
 router.get('/:id', getById);
