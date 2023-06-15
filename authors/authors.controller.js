@@ -1,9 +1,8 @@
 ﻿const express = require('express');
 const router = express.Router();
 const authorService = require('./author.service');
-const upload = require('../_helpers/middlewares/upload.js');
 
-let ImageManager = require("./ImageManager");
+let ImageManager = require("../_helpers/middlewares/ImageManager");
 const path = require('path');
 const fs = require('fs');
 
@@ -23,7 +22,7 @@ module.exports = router;
     const { profilePictureUri } = req.body;
 
     // Upload picture
-    const uploadResult = await ImageManager.uploadImage(profilePictureUri, "authors/upload/");
+    const uploadResult = await ImageManager.uploadImage(profilePictureUri, "assets/upload/");
     const fileName = uploadResult.fileName;
 
     // Send the picture url as a response to the frontend

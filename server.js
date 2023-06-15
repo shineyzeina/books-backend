@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/upload', express.static(path.join(__dirname, 'authors', 'upload')));
+app.use('/upload', express.static(path.join(__dirname, 'assets', 'upload')));
 // use JWT auth to secure the api
 app.use(jwt());
 
