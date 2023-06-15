@@ -19,7 +19,7 @@ async function getAll(data) {
 
         cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }, { "category": new RegExp(keyword, 'i') }]
     }
-    // add condition if author is sent
+    // add condition if author is sent  
    
     return await Book.find(cnd).populate("author createdBy ");
 
