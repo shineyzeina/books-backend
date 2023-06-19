@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const db = require('_helpers/db');
 const Book = db.Book;
 
+
 module.exports = {
     getAll,
     getById,
@@ -15,14 +16,23 @@ module.exports = {
 async function getAll(data) {
     var cnd = {};
     var keyword = data.keyword;
+    var authId = data.authId;
     if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
         cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }]
+    }
+
+    if (authId != "" && authId != "undefined" && authId != undefined) {
+        cnd.author = authId
     }
    
     return await Book.find(cnd).populate("author createdBy ");
 
 }
+
+// async function getByAuthorId(id) {
+//     return await Book.find({ "author" : id });
+// }
 
 async function getById(id) {
     return await Book.findById(id);

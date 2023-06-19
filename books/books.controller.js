@@ -2,6 +2,7 @@
 const router = express.Router();
 const bookService = require('./book.service');
 
+
 // routes
 router.post('/', saveNew);
 router.get('/', getAll);
@@ -30,6 +31,12 @@ function getById(req, res, next) {
         .then(book => book ? res.json(book) : res.sendStatus(404))
         .catch(err => next(err));
 }
+
+// function getAuthorBooks(req, res, next) {
+//     bookService.getByAuthorId(req.params.id)
+//     .then(books => res.json(books))
+//     .catch(err => next(err))
+// }
 
 function update(req, res, next) {
     bookService.update(req.params.id, req.body)

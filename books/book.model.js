@@ -18,7 +18,11 @@ const schema = new Schema({
     createdDate: { type: Date, default: Date.now },
     favorites: [
         { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-    ]
+    ],
+    category: {
+        type: String,
+        required: true
+    }
 });
 
 schema.set('toJSON', {

@@ -3,12 +3,14 @@ const jwt = require('jsonwebtoken');
 const db = require('_helpers/db');
 const Author = db.Author;
 
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
-    delete: _delete
+    delete: _delete,
+    getAuthorImg
 };
 
 
@@ -28,9 +30,7 @@ async function getById(id) {
 }
 
 async function create(param) {
-
     const author = new Author(param);
-   // save author
     await author.save();
 }
 
@@ -41,6 +41,11 @@ async function update(id, authorParam) {
     // copy authorParam properties to author
     Object.assign(author, authorParam);
     await author.save();
+}
+
+async function getAuthorImg(id){
+    const author = await Author.findById(id)
+    return author.authorImage;
 }
 
 async function _delete(id) {
