@@ -9,8 +9,7 @@ module.exports = {
     getById,
     create,
     update,
-    delete: _delete,
-    //getByAuthorId
+    delete: _delete
 };
 
 

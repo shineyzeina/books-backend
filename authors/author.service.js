@@ -9,7 +9,8 @@ module.exports = {
     getById,
     create,
     update,
-    delete: _delete
+    delete: _delete,
+    getAuthorImg
 };
 
 
@@ -40,6 +41,11 @@ async function update(id, authorParam) {
     // copy authorParam properties to author
     Object.assign(author, authorParam);
     await author.save();
+}
+
+async function getAuthorImg(id){
+    const author = await Author.findById(id)
+    return author.authorImage;
 }
 
 async function _delete(id) {

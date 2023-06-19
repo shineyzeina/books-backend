@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Author = new Schema({
     first_name: { type: String, unique: true, required: true },
     last_name: { type: String, unique: false, required: true },
-    authorImage: { type: String, required: true },
+    authorImage: { type: String },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
