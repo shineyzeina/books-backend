@@ -1,6 +1,7 @@
 ﻿const express = require("express");
 const router = express.Router();
 const authorService = require("./author.service");
+const Book = require('../books/book.model');
 let ImageManager = require("_helpers/ImageManager");
 
 router.post("/", saveNew);
@@ -8,6 +9,9 @@ router.get("/", getAll);
 router.get("/:id", getById);
 router.put("/:id", update);
 router.delete("/:id", _delete);
+
+// newly added
+router.get("/counts/get-books", getBooksCount);
 
 module.exports = router;
 
@@ -69,4 +73,45 @@ function _delete(req, res, next) {
     .delete(req.params.id)
     .then(() => res.json({}))
     .catch((err) => next(err));
+}
+
+async function getBooksCount(req, res) {
+  try {
+    const authorBookCounts = await Book.aggregate([
+      {
+        $group: {
+          _id: "$author",
+          bookCount: { $sum: 1 },
+        },
+      },
+      {
+        $lookup: {
+          from: "authors", // Replace with your author collection name
+          localField: "_id",
+          foreignField: "_id",
+          as: "author",
+        },
+      },
+      {
+        $unwind: "$author",
+      },
+      {
+        $project: {
+          _id: 0,
+          authorName: { $concat: ["$author.first_name", " ", "$author.last_name"] },
+          bookCount: 1,
+        },
+      },
+    ]);
+
+    const authorBookCountMap = {};
+    authorBookCounts.forEach(({ authorName, bookCount }) => {
+      authorBookCountMap[authorName] = bookCount;
+    });
+
+    res.json(authorBookCountMap);
+  } catch (error) {
+    console.error("Error fetching author book counts:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }

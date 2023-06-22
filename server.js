@@ -24,6 +24,9 @@ app.use('/books', require('./books/books.controller'));
 app.use('/author', require('./authors/authors.controller'));
 app.use('/authors', require('./authors/authors.controller'));
 
+app.use('/', require('./books/books.controller'));
+app.use('/', require('./authors/authors.controller'));
+
 // global error handler
 app.use(errorHandler);
 

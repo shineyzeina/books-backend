@@ -19,7 +19,7 @@ async function getAll(data) {
     var authId = data.authId;
     if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
-        cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }]
+        cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }, { "rating": new RegExp(keyword, 'i') }]
     }
 
     if (authId != "" && authId != "undefined" && authId != undefined) {

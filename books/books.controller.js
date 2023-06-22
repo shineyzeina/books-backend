@@ -11,6 +11,10 @@ router.put('/:id', update);
 router.put('/favorite/:id', favorite);
 router.delete('/:id', _delete);
 
+router.get('/genres/counts', getGenreCounts);
+router.get('/ratings/get-rating', getBookRatings);
+
+
 module.exports = router;
 
 function saveNew(req, res, next) {
@@ -67,3 +71,45 @@ function _delete(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+
+function getGenreCounts(req, res, next) {
+    bookService.getAll(req.query)
+      .then(books => {
+        const genreCounts = calculateGenreCounts(books);
+        res.json(genreCounts);
+      })
+      .catch(err => next(err));
+  }
+  
+  function calculateGenreCounts(books) {
+    const genreCounts = {};
+    books.forEach(book => {
+      const { category } = book;
+      if (genreCounts[category]) {
+        genreCounts[category] += 1;
+      } else {
+        genreCounts[category] = 1;
+      }
+    });
+    return genreCounts;
+  }
+
+  async function getBookRatings(req, res, next) {
+    try {
+      const books = await bookService.getAll(req.query);
+  
+      // Create an object with book names as keys and ratings as values
+      const bookRatings = {};
+      books.forEach((book) => {
+        bookRatings[book.name] = book.rating;
+      });
+  
+      res.json(bookRatings);
+    } catch (error) {
+      next(error);
+    }
+  }
+  
+
+
+
