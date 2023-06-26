@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path');
 const bodyParser = require('body-parser');
 const jwt = require('_helpers/jwt');
 const errorHandler = require('_helpers/error-handler');
@@ -13,6 +14,7 @@ app.use(cors());
 app.use('/uploads',express.static('./uploads'))
 app.use(express.static(__dirname + '/public'));
 
+app.use('/upload', express.static(path.join(__dirname, 'assets', 'upload')));
 // use JWT auth to secure the api
 app.use(jwt());
 
@@ -35,4 +37,5 @@ const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 
 //process.env.NODE_ENV refers to the value of the NODE_ENV environment variable. This variable is commonly used to indicate the environment in which the application is running, such as "production", "development", or "test".
 const server = app.listen(port, function () {
     console.log('Server listening on port ' + port);
+    
 });

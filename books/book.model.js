@@ -11,6 +11,11 @@ const schema = new Schema({
         ref: 'Author',
         required: true
     },
+    category : {
+        type : String,
+        unique : false,
+        required : true
+    },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
