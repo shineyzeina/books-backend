@@ -16,7 +16,10 @@ async function saveNew(req, res, next) {
   console.log(req.body);
   if (req.body.picChanged == true) {
     if (req.body.picture) {
-      let uploadResult = await ImageManager.uploadImage(req.body.picture);
+      let uploadResult = await ImageManager.uploadImage(
+        req.body.picture,
+        "authors/"
+      );
       req.body.authorImage = uploadResult.fileName;
       console.log("Ana hon");
     } else {
@@ -43,21 +46,24 @@ function getById(req, res, next) {
 }
 
 async function update(req, res, next) {
-    console.log(req.body.picChanged)
+  console.log(req.body.picChanged);
   if (req.body.picChanged == true) {
-    console.log("ANA honnnnn")
+    console.log("ANA honnnnn");
     const img = await authorService.getAuthorImg(req.params.id);
     if (img != "") {
-      await ImageManager.deleteImage(img);
+      await ImageManager.deleteImage("authors/" + img);
     }
     if (req.body.picture) {
-      let uploadResult = await ImageManager.uploadImage(req.body.picture);
+      let uploadResult = await ImageManager.uploadImage(
+        req.body.picture,
+        "authors/"
+      );
       req.body.authorImage = uploadResult.fileName;
       console.log("Ana hon");
     }
   }
-  
-  console.log("authorImage:" + req.body.authorImage)
+
+  console.log("authorImage:" + req.body.authorImage);
   authorService
     .update(req.params.id, req.body)
     .then(() => res.json({}))
