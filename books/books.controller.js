@@ -78,14 +78,18 @@ function _delete(req, res, next) {
         .catch(err => next(err));
 }
 
-function getGenreCounts(req, res, next) {
-    bookService.getAll(req.query)
-      .then(books => {
-        const genreCounts = calculateGenreCounts(books);
-        res.json(genreCounts);
-      })
-      .catch(err => next(err));
+async function getGenreCounts(req, res, next) {
+  try {
+    const { books } = await bookService.getAll(req.query);
+    // Here, we use destructuring to extract the 'books' array from the response
+  
+    const genreCounts = calculateGenreCounts(books);
+    res.json(genreCounts);
+  } catch (error) {
+    next(error);
   }
+}
+
   
   function calculateGenreCounts(books) {
     const genreCounts = {};
@@ -102,8 +106,9 @@ function getGenreCounts(req, res, next) {
 
   async function getBookRatings(req, res, next) {
     try {
-      const books = await bookService.getAll(req.query);
-  
+      const { books } = await bookService.getAll(req.query);
+      // Here, we use destructuring to extract the 'books' array from the response
+    
       // Create an object with book names as keys and ratings as values
       const bookRatings = {};
       books.forEach((book) => {
