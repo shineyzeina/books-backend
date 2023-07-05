@@ -10,7 +10,6 @@ module.exports = {
   getAll,
   getSome,
   getById,
-  getCount,
   create,
   update,
   delete: _delete,
@@ -28,27 +27,24 @@ async function getAll(data) {
 }
 
 async function getSome(data) {
-  console.log("t");
-  var cnd = {};
-  var keyword = data.searchKey;
-  const page = parseInt(data.page) || 0; // Get the page number from the query parameter (default to 1 if not provided)
-  const limit = parseInt(data.limit); // Set the number of institutions to fetch per page
+  const cnd = {};
+  const keyword = data.searchKey;
+  const page = parseInt(data.page) || 0;
+  const limit = parseInt(data.limit);
   const skip = page * limit;
 
-  if (keyword != "" && keyword != "undefined" && keyword != undefined) {
+  if (keyword && keyword !== "undefined" && keyword !== undefined) {
     cnd.$or = [{ name: new RegExp(keyword, "i") }];
   }
 
-  return await Institution.find(cnd)
-    .skip(skip)
-    .limit(limit)
-    .populate("createdBy");
+  const [institutions, count] = await Promise.all([
+    Institution.find(cnd).skip(skip).limit(limit).populate("createdBy"),
+    Institution.countDocuments(cnd),
+  ]);
+
+  return [institutions, count];
 }
 
-function getCount(data) {
-  const query = { name: { $regex: data.keyword, $options: "i" } };
-  return Institution.countDocuments(query);
-}
 async function getById(id) {
   return await Institution.findById(id);
 }

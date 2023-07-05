@@ -7,7 +7,6 @@ const fs = require("fs");
 router.post("/", saveNew);
 router.get("/", getAll);
 router.get("/partial", getSome);
-router.get("/count", getCount);
 router.get("/:id", getById);
 router.put("/:id", update);
 router.delete("/:id", _delete);
@@ -36,20 +35,11 @@ function getSome(req, res, next) {
     .catch((err) => next(err));
 }
 
-function getCount(req, res, next) {
-  institutionService
-    .getCount(req.query)
-    .then((count) => {
-      res.json({ count });
-    })
-    .catch((err) => next(err));
-}
-
 function getById(req, res, next) {
   institutionService
     .getById(req.params.id)
-    .then((institution) =>
-      institution ? res.json(institution) : res.sendStatus(404)
+    .then((institution, count) =>
+      institution ? res.json(institution, count) : res.sendStatus(404)
     )
     .catch((err) => next(err));
 }
