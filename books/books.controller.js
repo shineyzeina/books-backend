@@ -10,6 +10,7 @@ router.get('/:id', getById);
 router.put('/:id', update);
 router.put('/favorite/:id', favorite);
 router.delete('/:id', _delete);
+router.get('/',getByPages);
 
 router.get('/genres/counts', getGenreCounts);
 router.get('/ratings/get-rating', getBookRatings);
@@ -34,6 +35,11 @@ function getById(req, res, next) {
     bookService.getById(req.params.id)
         .then(book => book ? res.json(book) : res.sendStatus(404))
         .catch(err => next(err));
+}
+
+function getByPages(req, res, next) {
+    bookService.getByPages().then(book => book? res.json(book): res.sendStatus(404))
+    .catch(err => next(err));
 }
 
 // function getAuthorBooks(req, res, next) {

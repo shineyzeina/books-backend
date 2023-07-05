@@ -9,7 +9,7 @@ module.exports = {
     getById,
     create,
     update,
-    delete: _delete
+    delete: _delete,
 };
 
 
@@ -17,6 +17,10 @@ async function getAll(data) {
     var cnd = {};
     var keyword = data.keyword;
     var authId = data.authId;
+    var page = data.page || 1;
+    var itemsPerPage = data.items;
+    console.log(data.page)
+    console.log(itemsPerPage)
     if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
         cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }, { "category": new RegExp(keyword, 'i') }]
@@ -25,9 +29,23 @@ async function getAll(data) {
     if (authId != "" && authId != "undefined" && authId != undefined) {
         cnd.author = authId
     }
-   
-    return await Book.find(cnd).populate("author createdBy ");
 
+
+        const books = await Book.find(cnd).skip((page - 1) * itemsPerPage).limit(parseInt(itemsPerPage)).populate("author createdBy")    
+        const total = await Book.countDocuments(cnd);
+        return {
+            books: books,
+            total: total
+        }
+   
+
+    // return await Book.find(cnd).limit(5).populate("author createdBy ");
+
+}
+
+
+async function getTotalPages(data){
+    return await Book.find().limit(5);
 }
 
 // async function getByAuthorId(id) {
