@@ -13,25 +13,16 @@ module.exports = {
 };
 
 async function getAll(data) {
-  var cnd = {};
-  var keyword = data.keyword;
-  //   var institutionId = data.institutionId;
-  if (keyword != "" && keyword != "undefined" && keyword != undefined) {
-    cnd.$or = [
-      { first_name: new RegExp(keyword, "i") },
-      { last_name: new RegExp(keyword, "i") },
-    ];
-  }
 
-  //   if (
-  //     institutionId != "" &&
-  //     institutionId != "undefined" &&
-  //     institutionId != undefined
-  //   ) {
-  //     cnd.institution = institutionId;
-  //   }
+    var cnd = {};
+    var keyword = data.keyword;
+    if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
-  return await Author.find(cnd).populate("createdBy");
+        cnd.$or = [{ "first_name": new RegExp(keyword, 'i') }, { "last_name": new RegExp(keyword, 'i') }, { "nationality": new RegExp(keyword, 'i') }, { "publishing_house": new RegExp(keyword, 'i') }]
+    }
+   
+    return await Author.find(cnd).populate("createdBy");
+
 }
 
 async function getById(id) {

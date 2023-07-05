@@ -4,11 +4,17 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     ISBN: { type: String, unique: true, required: true },
     name: { type: String, unique: false, required: true },
+    rating: { type: Number, unique: false, required: true },
     author:
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Author',
         required: true
+    },
+    category : {
+        type : String,
+        unique : false,
+        required : true
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,

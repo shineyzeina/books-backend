@@ -23,9 +23,9 @@ async function getAll(data) {
     console.log(itemsPerPage)
     if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
-        cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }]
+        cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }, { "category": new RegExp(keyword, 'i') }]
     }
-
+    // add condition if author is sent  
     if (authId != "" && authId != "undefined" && authId != undefined) {
         cnd.author = authId
     }
