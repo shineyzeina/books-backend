@@ -13,11 +13,7 @@ function jwt() {
             '/users/register',
             '/user/authenticate',
             '/user/register',
-<<<<<<< HEAD
             '/uploads/*'
-=======
-            '/authors/upload/*'
->>>>>>> origin/books-backend-joe
         ]
     });
 }

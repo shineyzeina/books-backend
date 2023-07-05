@@ -19,17 +19,12 @@ async function getAll(data) {
     var authId = data.authId;
     if (keyword != "" && keyword != "undefined" && keyword != undefined) {
 
-<<<<<<< HEAD
-        cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }, { "rating": new RegExp(keyword, 'i') }]
-    }
-
-    if (authId != "" && authId != "undefined" && authId != undefined) {
-        cnd.author = authId
-=======
         cnd.$or = [{ "ISBN": new RegExp(keyword, 'i') }, { "name": new RegExp(keyword, 'i') }, { "category": new RegExp(keyword, 'i') }]
->>>>>>> origin/books-backend-joe
     }
     // add condition if author is sent  
+    if (authId != "" && authId != "undefined" && authId != undefined) {
+        cnd.author = authId
+    }
    
     return await Book.find(cnd).populate("author createdBy ");
 
