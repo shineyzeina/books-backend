@@ -56,6 +56,7 @@ function getAll(req, res, next) {
         currentPage: page,
         totalPages: Math.ceil(authors.length / limit),
         authors: paginatedAuthors,
+        allAuth: authors
       });
     })
     .catch((err) => next(err));
